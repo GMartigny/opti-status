@@ -20,7 +20,7 @@ const messages = {
     [statuses.isFunction]: "a function",
     [statuses.isNeverOptimize]: "never optimized",
     [statuses.isAlwaysOptimize]: "always optimized",
-    [statuses.isMaybeDeopted]: "maybe deopted",
+    [statuses.isMaybeDeopted]: "maybe de-optimized",
     [statuses.isOptimized]: "optimized",
     [statuses.isTurboFanned]: "turbo-fanned",
     [statuses.isInterpreted]: "interpreted",
@@ -28,7 +28,7 @@ const messages = {
     [statuses.isMarkedForConcurrentOptimization]: "marked for concurrent optimization",
     [statuses.isOptimizingConcurrently]: "currently being optimized",
     [statuses.isExecuting]: "executing",
-    [statuses.isTopmostFrameIsTurboFanned]: "the topmost frame is turbo-fanned",
+    [statuses.isTopmostFrameTurboFanned]: "the topmost frame is turbo-fanned",
     [statuses.isLiteMode]: "in lite mode",
 };
 const defaultMessage = "Unknown optimization status.";
@@ -53,6 +53,15 @@ const getMessage = (status = -1) => {
     return defaultMessage;
 };
 
+const safe = (func, ...funcArgs) => {
+    try {
+        func(...funcArgs);
+    }
+    catch (e) {
+        console.warn("Passed function throw an exception.");
+    }
+};
+
 const prepareFunction = (func, ...funcArgs) => {
     let exe;
     const type = typeof func;
@@ -67,14 +76,26 @@ const prepareFunction = (func, ...funcArgs) => {
         throw new TypeError(`Cannot parse type [${type}] to a function.`);
     }
 
-    exe(...funcArgs);
-    exe(...funcArgs);
+    safe(exe, ...funcArgs);
+    safe(exe, ...funcArgs);
     v8.optimizeFunctionOnNextCall(exe);
     // The next call
-    exe(...funcArgs);
+    safe(exe, ...funcArgs);
     return exe;
 };
 
+/**
+ * @typedef {Object} OptimizationStatus
+ * @prop {Number} status - V8 optimization status number
+ * @prop {Function} function - Passed function for future reference
+ * @prop {String} message - Optimization status as a human readable format
+ */
+/**
+ * Get the optimization status of a function from the point of view of V8
+ * @param {Function|String} func - Function to get optimization status from
+ * @param {...*} funcArgs - Set of arguments used when calling `func`
+ * @returns {OptimizationStatus}
+ */
 module.exports = (func, ...funcArgs) => {
     const exe = prepareFunction(func, ...funcArgs);
 
