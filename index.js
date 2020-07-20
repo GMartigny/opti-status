@@ -1,4 +1,4 @@
-const v8 = require("v8.js");
+const { prepareFunctionForOptimization, optimizeFunctionOnNextCall, getOptimizationStatus } = require("v8.js");
 
 const statuses = {
     isFunction: 2 ** 0,
@@ -57,8 +57,8 @@ const safe = (func, ...funcArgs) => {
     try {
         func(...funcArgs);
     }
-    catch (e) {
-        console.warn("Passed function throw an exception.");
+    catch {
+        // Nothing to do here
     }
 };
 
@@ -78,7 +78,8 @@ const prepareFunction = (func, ...funcArgs) => {
 
     safe(exe, ...funcArgs);
     safe(exe, ...funcArgs);
-    v8.optimizeFunctionOnNextCall(exe);
+    prepareFunctionForOptimization(exe);
+    optimizeFunctionOnNextCall(exe);
     // The next call
     safe(exe, ...funcArgs);
     return exe;
@@ -99,7 +100,7 @@ const prepareFunction = (func, ...funcArgs) => {
 module.exports = (func, ...funcArgs) => {
     const exe = prepareFunction(func, ...funcArgs);
 
-    const status = v8.getOptimizationStatus(exe);
+    const status = getOptimizationStatus(exe);
 
     return {
         status,

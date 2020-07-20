@@ -1,14 +1,13 @@
 # opti-status
-[![NPM version](https://flat.badgen.net/npm/v/lorem-pix)](https://www.npmjs.com/package/lorem-pix)
-[![NPM weekly download](https://flat.badgen.net/npm/dw/lorem-pix)](https://www.npmjs.com/package/lorem-pix)
-[![package publish size](https://flat.badgen.net/packagephobia/publish/lorem-pix)](https://packagephobia.now.sh/result?p=lorem-pix)
-[![Support me on Patreon](https://flat.badgen.net/badge/become/a%20patron/F96753?icon=patreon)](https://www.patreon.com/gmartigny)
+
+[![NPM version](https://flat.badgen.net/npm/v/opti-status)](https://www.npmjs.com/package/opti-status)
 
 Get the optimization status of a function from the point of view of V8 engine.
 
 ## Installation
 
     $ npm install opti-status
+
 
 ## Usage
 
@@ -23,7 +22,6 @@ console.log(optiStatus(myFunc).message);
 ```
 
 ## API
-
 
 ### `optiStatus(func, [...args])`
 
@@ -51,6 +49,7 @@ if (optiStatus(func).status & optiStatus.statuses.isOptimized) {
     console.log("Great work!");
 }
 ```
+
 
 ## License
 
