@@ -1,7 +1,7 @@
 {
     "name": "opti-status",
     "version": "1.0.0",
-    "description": "",
+    "description": "Get the optimization status of a function from the point of view of V8 engine",
     "keywords": [
         "optimization",
         "turbo-fan",
@@ -16,6 +16,7 @@
         "extends": "@gmartigny/eslint-config"
     },
     "author": "GMartigny <guillaume.martigny@gmail.com>",
+    "funding": "https://github.com/GMartigny/opti-status?sponsor=1",
     "license": "MIT",
     "dependencies": {
         "v8.js": "^1.0.0"
@@ -24,5 +25,16 @@
         "@gmartigny/eslint-config": "^1.5.0",
         "ava": "^3.10.1",
         "eslint": "^7.5.0"
-    }
+    },
+    "directories": {
+        "test": "test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/GMartigny/opti-status.git"
+    },
+    "bugs": {
+        "url": "https://github.com/GMartigny/opti-status/issues"
+    },
+    "homepage": "https://github.com/GMartigny/opti-status#readme"
 }
