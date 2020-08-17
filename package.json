@@ -1,6 +1,6 @@
 {
     "name": "opti-status",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Get the optimization status of a function from the point of view of V8 engine",
     "keywords": [
         "optimization",
